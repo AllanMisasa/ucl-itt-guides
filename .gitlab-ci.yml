@@ -1,6 +1,19 @@
 image: node:9.11.1
+stages:
+  - test
+  - deploy
+
+test:
+  stage: test
+  script:
+  - cd website
+  - yarn install
+  - yarn build
+  rules:
+    - if: '$CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
 
 pages:
+  stage: deploy
   script:
   - cd website
   - yarn install
@@ -9,10 +22,8 @@ pages:
   # website/siteConfig.js. If you change it there, you need to change it here
   # as well.
   - mv ./build/docusaurus ../public
-
   artifacts:
     paths:
     - public
-
-  only:
-  - master
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
