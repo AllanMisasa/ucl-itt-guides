@@ -1,28 +1,47 @@
 ---
-title: Flashing MicroPython on ESP32
+title: Flash MicroPython på ESP32
 slug: /
 ---
 
-## Step 1: Generate a new Docusaurus site
+# Guide til første gang: Flash ESP32 fra bunden
 
 If you haven't already, generate a new Docusaurus site using the classic template:
 
-```shell
-npx @docusaurus/init@latest init my-website classic
+# Guide til re-flash: Flash ESP32 med eksisterende firmware og esptool.py allerede installeret
+
+## Step 1: Find portnummer
+
+Find portnummeret via enhedshåndtering (device manager):
+
+![Device manager](https://i.imgur.com/6xwUbby.png)
+
+Her er det f.eks. 
+```COM3
+```
+ porten at min ESP32 er på.
+
+## Step 2: Formater eksisterende flash
+
+Åben din terminal eller kommandoprompt og brug følgende kommando (husk at skift portnummeret til det du selv fandt i step 1):
+
+```esptool.py --chip esp32 --port COM3 erase_flash
 ```
 
-## Step 2: Start your Docusaurus site
+## Step 3: Skift sti til der hvor din MicroPython firmware er gemt
 
-Run the development server in the newly created `my-website` folder:
+Stadig i terminal/CMD, gå til stien hvor din MicroPython firmware er gemt. 
 
-```shell
-cd my-website
+* Hvis gemt i downloads/overførsler:
+    ```cd downloads```
+* Hvis gemt andet sted, skift downloads ud med den absolutte path - f.eks.:
+    ```cd C:\lib\firmware```
 
-npx docusaurus start
-```
+## Step 4: Flash ESP32 med MicroPython firmware
 
-Open `docs/getting-started.md` and edit some lines. The site reloads automatically and display your changes.
+Brug følgende kommando, men husk at ændre COM porten og filnavnet:
+
+```esptool.py --chip esp32 --port COM3 --baud 460800 write_flash -z 0x1000 esp32.bin```
 
 ## That's it!
 
-Congratulations! You've successfully run and modified your Docusaurus project.
+Tillykke! Din ESP32 er flashed og klar til alle de projekter vi skal bygge!
