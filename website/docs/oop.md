@@ -1,5 +1,5 @@
 ---
-title: Create a Page
+title: Objekt-Orienteret Programmering
 ---
 
 Any React or Markdown file created under `src/pages` directory is converted into a website page:
