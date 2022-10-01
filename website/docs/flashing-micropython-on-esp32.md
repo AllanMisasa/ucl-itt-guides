@@ -1,5 +1,5 @@
 ---
-title: Getting Started
+title: Flashing MicroPython on ESP32
 slug: /
 ---
 
