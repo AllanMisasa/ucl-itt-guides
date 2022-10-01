@@ -3,7 +3,7 @@ module.exports = {
   title: 'My Site',
   tagline: 'The tagline of my site',
   url: 'https://eal-itt.gitlab.io',
-  baseUrl: '/UCL-ITT-Guides/',
+  baseUrl: '/ucl-itt-guides/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
