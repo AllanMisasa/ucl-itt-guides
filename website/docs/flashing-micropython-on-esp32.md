@@ -16,16 +16,14 @@ Find portnummeret via enhedshåndtering (device manager):
 ![Device manager](https://i.imgur.com/6xwUbby.png)
 
 Her er det f.eks. 
-```COM3
-```
+```COM3```
  porten at min ESP32 er på.
 
 ## Step 2: Formater eksisterende flash
 
 Åben din terminal eller kommandoprompt og brug følgende kommando (husk at skift portnummeret til det du selv fandt i step 1):
 
-```esptool.py --chip esp32 --port COM3 erase_flash
-```
+```esptool.py --chip esp32 --port COM3 erase_flash```
 
 ## Step 3: Skift sti til der hvor din MicroPython firmware er gemt
 
