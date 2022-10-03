@@ -12,8 +12,8 @@ const features = [
     imageUrl: 'img/undraw_docusaurus_mountain.svg',
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Guides was designed with Docusaurus which makes finding the guide you need as easy as possible!
+        On the bottom of this page are useful links.
       </>
     ),
   },
@@ -22,18 +22,16 @@ const features = [
     imageUrl: 'img/undraw_docusaurus_tree.svg',
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        The guides are easy to navigate, and the structure will enable you to focus on your exact needs in the moment.
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Independence and efficiency',
     imageUrl: 'img/undraw_docusaurus_react.svg',
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Being able to simply open up guides for recurring tasks, makes problem solving even more efficient, and you can focus on the important matters in class.
       </>
     ),
   },
@@ -72,7 +70,7 @@ export default function Home() {
                 styles.getStarted,
               )}
               to={useBaseUrl('docs/')}>
-              Get Started
+              To the guides
             </Link>
           </div>
         </div>
