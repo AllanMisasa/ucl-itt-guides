@@ -2,13 +2,9 @@ module.exports = {
   docs: [
     {
       type: 'category',
-      label: 'Guides',
+      label: 'Embedded Systems',
       items: [
         'flashing-micropython-on-esp32',
-        'create-a-document',
-        'create-a-blog-post',
-        'markdown-features',
-        'thank-you',
       ],
     },
     {
@@ -16,6 +12,27 @@ module.exports = {
       label: 'Programming',
       items: [
         'oop',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Projekt',
+      items: [
+        'generelprojektbeskrivelse',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Elektronik',
+      items: [
+        'elektronik',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Netværk',
+      items: [
+        'netværk'
       ],
     },
   ],
