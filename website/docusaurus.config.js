@@ -1,7 +1,7 @@
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'My Site',
-  tagline: 'The tagline of my site',
+  title: 'UCL ITT Guides',
+  tagline: 'Your one stop shop for setup, basic programming, electronic testing etc.',
   url: 'https://eal-itt.gitlab.io',
   baseUrl: '/ucl-itt-guides/',
   onBrokenLinks: 'throw',
@@ -11,7 +11,7 @@ module.exports = {
   projectName: 'UCL-ITT-Guides', // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: 'Docusaurus on GitLab Pages',
+      title: 'UCL ITT Guides',
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.svg',
@@ -20,14 +20,20 @@ module.exports = {
         {
           to: 'docs/',
           activeBasePath: 'docs',
-          label: 'Docs',
+          label: 'Guides',
           position: 'left',
         },
-        {to: 'blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://gitlab.com/pages/docusaurus',
-          label: 'GitLab',
-          position: 'right',
+          to: 'indlejrede/', 
+          activeBasePath: 'indlejrede', 
+          label: 'Embedded Systems', 
+          position: 'left'
+        },
+        {
+          to: 'netværk/',
+          activeBasePath: 'netværk',
+          label: 'Netværk',
+          position: 'left',
         },
       ],
     },
@@ -38,7 +44,7 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'Getting Started',
+              label: 'Guides',
               to: 'docs/',
             },
           ],
@@ -47,16 +53,16 @@ module.exports = {
           title: 'Community',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'ItsLearning',
+              href: 'https://ucl.itslearning.com/Index.aspx',
             },
             {
               label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
+              href: 'https://discord.gg/tntXwZ3Tag',
             },
             {
-              label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
+              label: 'Instagram',
+              href: 'https://www.instagram.com/ucl.dk/?hl=da',
             },
           ],
         },
@@ -64,17 +70,17 @@ module.exports = {
           title: 'More',
           items: [
             {
-              label: 'Blog',
-              to: 'blog',
+              label: 'Studiedokumenter ITT',
+              to: 'https://www.ucl.dk/studiedokumenter/it-teknolog',
             },
             {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              label: 'GitLab',
+              href: 'https://eal-itt.gitlab.io/',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Built with Docusaurus.`,
     },
   },
   presets: [
