@@ -23,18 +23,6 @@ module.exports = {
           label: 'Guides',
           position: 'left',
         },
-        {
-          to: 'indlejrede/', 
-          activeBasePath: 'indlejrede', 
-          label: 'Embedded Systems', 
-          position: 'left'
-        },
-        {
-          to: 'netværk/',
-          activeBasePath: 'netværk',
-          label: 'Netværk',
-          position: 'left',
-        },
       ],
     },
     footer: {
