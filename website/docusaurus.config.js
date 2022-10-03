@@ -6,15 +6,15 @@ module.exports = {
   baseUrl: '/ucl-itt-guides/',
   onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/ucl.ico',
   organizationName: 'EAL-ITT', // Usually your GitHub org/user name.
   projectName: 'UCL-ITT-Guides', // Usually your repo name.
   themeConfig: {
     navbar: {
       title: 'UCL ITT Guides',
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        alt: 'UCL Logo',
+        src: 'img/ucl2.png',
       },
       items: [
         {
