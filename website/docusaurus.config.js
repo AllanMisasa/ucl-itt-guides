@@ -4,7 +4,7 @@ module.exports = {
   tagline: 'Your one stop shop for setup, basic programming, electronic testing etc.',
   url: 'https://eal-itt.gitlab.io',
   baseUrl: '/ucl-itt-guides/',
-  onBrokenLinks: 'pass',
+  onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'EAL-ITT', // Usually your GitHub org/user name.
