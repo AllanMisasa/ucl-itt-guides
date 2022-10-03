@@ -1,6 +1,5 @@
 ---
-title: Project Report Requirements
-slug: /
+title: Project Report Requirements and Template
 ---
 
 ## Report structure
