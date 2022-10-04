@@ -12,7 +12,7 @@ module.exports = {
       label: 'Programming',
       items: [
         'oop',
-        'programmering_basics',
+        'programmering-basics',
       ],
     },
     {
@@ -33,7 +33,7 @@ module.exports = {
       type: 'category',
       label: 'Netværk',
       items: [
-        'netværk'
+        'netværk',
       ],
     },
   ],
