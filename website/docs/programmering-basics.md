@@ -1,6 +1,5 @@
 ---
 title: De basale programmeringskoncepter med eksempler i Python
-slug: /
 ---
 
 ## Datatyper 

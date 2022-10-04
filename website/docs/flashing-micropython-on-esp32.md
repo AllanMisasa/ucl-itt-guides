@@ -1,6 +1,5 @@
 ---
 title: Flash MicroPython på ESP32
-slug: /
 ---
 
 # Guide til første gang: Flash ESP32 fra bunden
