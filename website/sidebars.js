@@ -12,6 +12,7 @@ module.exports = {
       label: 'Programming',
       items: [
         'oop',
+        'programmering_basics'
       ],
     },
     {
