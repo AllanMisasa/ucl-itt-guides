@@ -53,7 +53,6 @@ def checker2(input_value):
         print('input er indenfor grænserne')
     else: 
         print('input er ikke indenfor grænserne')
-
 ```
 
 ## Loops
@@ -77,5 +76,30 @@ n = 0
 while n < 100:
     n += 1
     print(n)
+```
+
+## Klasse eksempel - Personaledatabase
+
+```python
+# Klasse til at tilføje og ændre i personale
+class Personale:
+    # Constructor/init
+    def __init__(self, navn, personale_id,
+                 kontor_lokation, stilling):
+        # Objektets attributter
+        self.navn = navn
+        self.personale_id = personale_id
+        self.kontor_lokation = kontor_lokation
+        self.stilling = stilling
+    # Metode
+    def skift_lokation(self, ny_kontor_lokation):
+        self.kontor_lokation = ny_kontor_lokation
+
+# Opret nyt personalemedlem
+p1 = Personale('Ekaterina', 1244, 'Aarhus', 'Leder')
+# Brug metode til at relokere personale
+p1.skift_lokation('Odense')
+# Check at lokationen er skiftet
+print(p1.kontor_lokation)
 ```
 
