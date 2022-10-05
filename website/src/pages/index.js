@@ -72,6 +72,14 @@ export default function Home() {
               to={useBaseUrl('docs/')}>
               To the guides
             </Link>
+            <Link
+              className={clsx(
+                'button button--outline button--secondary button--lg',
+                styles.getStarted,
+              )}
+              to={URL('https://eal-itt.gitlab.io/22a-itt1-programmering/')}>
+                Programmering 
+              </Link>
           </div>
         </div>
       </header>
