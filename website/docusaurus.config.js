@@ -19,7 +19,7 @@ module.exports = {
       items: [
         {
           to: 'docs/flashing-micropython-on-esp32/',
-          activeBasePath: 'docs',
+          activeBasePath: 'docs/flashing-micropython-on-esp32/',
           label: 'Guides',
           position: 'left',
         },
