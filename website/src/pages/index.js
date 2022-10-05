@@ -64,15 +64,7 @@ export default function Home() {
           <h1 className="hero__title">{siteConfig.title}</h1>
           <p className="hero__subtitle">{siteConfig.tagline}</p>
           <div className={styles.buttons}>
-            <Link
-              className={clsx(
-                'button button--outline button--secondary button--lg',
-                styles.getStarted,
-              )}
-              to={useBaseUrl('docs/')}>
-              Guides
-            </Link>
-            <Link
+              <Link
               className={clsx(
                 'button button--outline button--secondary button--lg',
                 styles.getStarted,
@@ -112,6 +104,8 @@ export default function Home() {
               to={'https://eal-itt.gitlab.io/22a-itt1-indlejrede-systemer/'}>
                 Indlejrede 1
                 </Link>
+            </div>
+            <div className={styles.buttons}>
                 <Link
                 className={clsx(
                   'button button--outline button--secondary button--lg',
