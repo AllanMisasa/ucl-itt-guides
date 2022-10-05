@@ -80,6 +80,8 @@ export default function Home() {
               to={'https://eal-itt.gitlab.io/22a-itt1-netvaerk/'}>  
                 Netværk 1
                 </Link>
+          </div>
+          <div className={styles.buttons}>
                 <Link
                 className={clsx(
                   'button button--outline button--secondary button--lg',
@@ -96,6 +98,8 @@ export default function Home() {
               to={'https://eal-itt.gitlab.io/22A-ITT1-Elektronik/'}>
                 Elektronik 1
                 </Link>
+          </div>
+          <div className={styles.buttons}>
                 <Link
                 className={clsx(
                   'button button--outline button--secondary button--lg',
@@ -104,8 +108,6 @@ export default function Home() {
               to={'https://eal-itt.gitlab.io/22a-itt1-indlejrede-systemer/'}>
                 Indlejrede 1
                 </Link>
-            </div>
-            <div className={styles.buttons}>
                 <Link
                 className={clsx(
                   'button button--outline button--secondary button--lg',
@@ -114,6 +116,8 @@ export default function Home() {
               to={'https://eal-itt.gitlab.io/22a-itt3-project/'}>
                 Project 3
                 </Link>
+          </div>
+          <div className={styles.buttons}>
                 <Link
                 className={clsx(
                   'button button--outline button--secondary button--lg',
