@@ -22,7 +22,7 @@
 .buttons {
   display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
   padding: 4px;
 }
