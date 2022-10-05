@@ -77,7 +77,7 @@ export default function Home() {
                 'button button--outline button--secondary button--lg',
                 styles.getStarted,
               )}
-              to={new URL('https://eal-itt.gitlab.io/22a-itt1-programmering/')}>
+              to={'https://eal-itt.gitlab.io/22a-itt1-programmering/'}>
                 Programmering 
               </Link>
           </div>
