@@ -20,11 +20,11 @@
 }
 
 .buttons {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   flex-wrap: wrap;
+  gap: 10px;
   justify-content: center;
-  padding: 4px;
 }
 
 .features {
