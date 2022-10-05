@@ -1,6 +1,6 @@
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'UCL ITT Guides',
+  title: 'UCL ITT',
   tagline: 'Your one stop shop for setup, basic programming, electronic testing etc.',
   url: 'https://eal-itt.gitlab.io',
   baseUrl: '/ucl-itt-guides/',
@@ -11,7 +11,7 @@ module.exports = {
   projectName: 'UCL-ITT-Guides', // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: 'UCL ITT Guides',
+      title: 'UCL ITT ',
       logo: {
         alt: 'UCL Logo',
         src: 'img/ucl2.png',
@@ -62,7 +62,7 @@ module.exports = {
               to: 'https://www.ucl.dk/studiedokumenter/it-teknolog',
             },
             {
-              label: 'GitLab',
+              label: 'GitLab Arkiv',
               href: 'https://eal-itt.gitlab.io/',
             },
           ],
