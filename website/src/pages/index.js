@@ -70,7 +70,7 @@ export default function Home() {
                 styles.getStarted,
               )}
               to={useBaseUrl('docs/')}>
-              To the guides
+              Guides
             </Link>
             <Link
               className={clsx(
@@ -78,8 +78,64 @@ export default function Home() {
                 styles.getStarted,
               )}
               to={'https://eal-itt.gitlab.io/22a-itt1-programmering/'}>
-                Programmering 
+                Programmering 1
               </Link>
+              <Link
+                className={clsx(
+                  'button button--outline button--secondary button--lg',
+                  styles.getStarted,
+                )}
+              to={'https://eal-itt.gitlab.io/22a-itt1-netvaerk/'}>  
+                Netværk 1
+                </Link>
+                <Link
+                className={clsx(
+                  'button button--outline button--secondary button--lg',
+                  styles.getStarted,
+                )}
+              to={'https://eal-itt.gitlab.io/22a-itt1-projekt/'}>
+                Projekt 1
+                </Link>
+                <Link
+                className={clsx(
+                  'button button--outline button--secondary button--lg',
+                  styles.getStarted,
+                )}
+              to={'https://eal-itt.gitlab.io/22A-ITT1-Elektronik/'}>
+                Elektronik 1
+                </Link>
+                <Link
+                className={clsx(
+                  'button button--outline button--secondary button--lg',
+                  styles.getStarted,
+                )}
+              to={'https://eal-itt.gitlab.io/22a-itt1-indlejrede-systemer/'}>
+                Indlejrede 1
+                </Link>
+                <Link
+                className={clsx(
+                  'button button--outline button--secondary button--lg',
+                  styles.getStarted,
+                )}
+              to={'https://eal-itt.gitlab.io/22a-itt3-project/'}>
+                Project 3
+                </Link>
+                <Link
+                className={clsx(
+                  'button button--outline button--secondary button--lg',
+                  styles.getStarted,
+                )}
+              to={'https://eal-itt.gitlab.io/22a-itt3-advanced-networking/'}>
+                Advanced Net
+                </Link>
+                <Link
+                className={clsx(
+                  'button button--outline button--secondary button--lg',
+                  styles.getStarted,
+                )}
+              to={'https://eal-itt.gitlab.io/22a-itt3-industrial-application/'}>
+                Industrial App
+                </Link>
           </div>
         </div>
       </header>
