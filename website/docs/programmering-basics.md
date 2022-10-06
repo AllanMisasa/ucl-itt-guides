@@ -23,7 +23,7 @@ float2 = -0.15125
 ```python
 # Liste med strings
 liste1 = ['Anders', 'Alberte', 'Claudio', 'Francesca']
-# Print 3. element i liste
+# Print 3. element i liste via indeksering
 print(liste1[2])
 # Tilføj element til listen
 liste1.append('Akiha')
@@ -33,6 +33,16 @@ liste1.remove('Anders')
 liste2 = ['Flora', 'Rami']
 sammensat_liste = liste1 + liste2
 print(sammensat_liste)
+# Læg 2 bestemte elementer sammen fra en liste med indeksering
+liste1[0] + liste1[3]
+# Definer dictionary - Dansk til engelsk ordbog som eksempel 
+ordbog = {
+    'Emotionel': 'Emotional', # Nøgle : Værdi
+    'Skade': 'Damage',
+    'Programmering': 'Programming'
+    }
+# Find bestemt værdi via nøgle
+print(ordbog['Emotionel'])
 ```
 
 ## Conditions og funktioner
