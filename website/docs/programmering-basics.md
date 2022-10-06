@@ -63,6 +63,14 @@ def checker2(input_value):
         print('input er indenfor grænserne')
     else: 
         print('input er ikke indenfor grænserne')
+
+# Funktion der tager flere af de samme type inputs og gør noget med allesammen
+def multi_checker(*words): # * definerer at den kan tage flere inputs
+    for ord in words:
+        word_length = len(ord)
+        print(word_length)
+# Giv funktionen flere inputs
+multi_checker('hi', 'world')
 ```
 
 ## Loops
