@@ -13,6 +13,7 @@ module.exports = {
       items: [
         'oop',
         'programmering-basics',
+        'sql',
       ],
     },
     {
