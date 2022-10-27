@@ -14,6 +14,7 @@ module.exports = {
         'oop',
         'programmering-basics',
         'sql',
+        'paho-mqtt'
       ],
     },
     {
