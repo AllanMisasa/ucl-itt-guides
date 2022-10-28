@@ -1,8 +1,20 @@
 ---
-title: Python MQTT med Paho
+title: MQTT
 ---
 
-## Eksempel på publish
+## Kommando til at starte Mosquitto broker
+
+```terminal
+mosquitto -v -c mosquitto.conf
+```
+
+## Kommando til at start subscribe client med Mosquitto
+
+```terminal
+mosquitto_sub -h hostname -t topic_name
+```
+
+## Eksempel på publish i Python
 
 ```python
 import socket
@@ -40,3 +52,7 @@ try:
     client.publish("messages/non_critical", "Test message")
 except:
     print("Something failed. Please try again later.")
+```
+
+## Subscribe i Python
+
