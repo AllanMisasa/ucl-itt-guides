@@ -24,7 +24,7 @@ Thonny er en IDE (Integrated Development Environment) som er cpecielt god til at
 
 Det næstsidste vindue i processen er vist herunder:
 
-![Flash MicroPython firmware to ESP](/website/static/img/thonny_micro.png)
+![Flash MicroPython firmware to ESP](images/thonny_micro.png)
 
 
 # Guide til re-flash: Flash ESP32 med eksisterende firmware og esptool.py allerede installeret
