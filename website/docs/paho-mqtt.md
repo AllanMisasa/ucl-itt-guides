@@ -87,3 +87,77 @@ while True:
     client.subscribe(topic)
     time.sleep(10)
 ```
+
+## Publish fra ESP32 i MicroPython
+
+```python
+from umqtt.simple import MQTTClient
+import time
+import machine
+import ubinascii
+
+# Netværk og MQTT broker vi skal forbinde til
+ssid = b'elab-iot'
+password = 'indlejrede'
+broker = '192.168.1.210'
+
+client_id = ubinascii.hexlify(machine.unique_id())
+topic_pub = b'/aht_esp1'
+
+station = network.WLAN(network.STA_IF)
+station.active(True)
+
+# Tjek om der er forbindelse til WiFi og hvis ikke, så forbind.
+if station.isconnected() == False:
+    station.connect(ssid, password)
+
+print('Connection successful')
+
+time.sleep(3) # Vent på forbindelse til MQTT broker. Det er vigtigt at der går lidt tid før vi forsøger at forbinde til MQTT broker efter vi har forbindelse til WiFi, da ESP32 måske ikke er blevet givet en IP adresse endnu.
+
+client = MQTTClient(client_id, broker)
+client.connect()
+
+# Publish beskeder til MQTT broker i et while loop
+while True:
+    msg = b'Hello from ESP32'
+    client.publish(topic_pub, msg)
+    sleep(5)      
+```
+
+## Subscribe fra ESP32 i MicroPython
+
+```python   
+from umqtt.simple import MQTTClient
+import time
+import machine
+import ubinascii
+
+ssid = b'elab-iot'
+password = 'indlejrede'
+broker = '192.168.1.210'
+
+client_id = ubinascii.hexlify(machine.unique_id())
+topic_sub = b'/aht_esp1'
+
+station = network.WLAN(network.STA_IF)
+station.active(True)
+
+if station.isconnected() == False:
+    station.connect(ssid, password)
+
+print('Connection successful')
+
+time.sleep(3) 
+
+client = MQTTClient(client_id, broker)
+client.connect()
+
+# Subscribe til beskeder fra MQTT broker i et while loop
+while True:
+    client.subscribe(topic_sub)
+    # Afvent besked fra MQTT broker
+    client.wait_msg()
+    print('Message received: {}'.format(msg))
+    time.sleep(5)
+```
