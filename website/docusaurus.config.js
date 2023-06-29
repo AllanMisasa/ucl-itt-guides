@@ -65,6 +65,10 @@ module.exports = {
               label: 'GitLab Arkiv',
               href: 'https://eal-itt.gitlab.io/',
             },
+            {
+              label: 'Elab komponentdatabase',
+              href: 'https://elab.gsrv.dk/',
+            },
           ],
         },
       ],
