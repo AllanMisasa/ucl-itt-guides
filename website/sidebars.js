@@ -5,6 +5,7 @@ module.exports = {
       label: 'Embedded Systems',
       items: [
         'flashing-micropython-on-esp32',
+        'pwm',
       ],
     },
     {

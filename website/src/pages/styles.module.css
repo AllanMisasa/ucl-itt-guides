@@ -13,6 +13,7 @@
   color: white;
 }
 
+/* This is your fucking fix */
 .heroButtons {
   display: grid;
   grid-template-columns: 1fr 1fr;
