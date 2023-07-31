@@ -15,6 +15,7 @@ module.exports = {
       items: [
         'oop',
         'programmering-basics',
+        'state-machine',
         'sql',
         'paho-mqtt'
       ],
