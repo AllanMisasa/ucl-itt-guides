@@ -7,6 +7,8 @@ module.exports = {
         'flashing-micropython-on-esp32',
         'pwm',
         'time-of-flight',
+        'i2c',
+        'sensor',
       ],
     },
     {

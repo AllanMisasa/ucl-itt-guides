@@ -14,7 +14,7 @@ Det kan f.eks. illustreres som følger:
 
 Dette er et ekempel på et Pulsbreddemodulation (PWM) signal med varierende arbejdscyklus (duty cycle = D; 10% trin) og fast periodetid.
 
-## PWM på ESP32 med MicroPython
+## PWM til LED på ESP32 med MicroPython
 
 ESP32 har mange pins der kan bruges til at sende PWM signaler ud. Faktisk kan en ESP32 styre 16 PWM signaler uafhængige af hinanden. Find en af dem, f.eks. ved at kigge på en pinout:
 
@@ -40,6 +40,12 @@ Analoge servomotorer bruger PWM til at styre motorakslens position.
 
 PWM-signalet er normalt omkring 50 Hz, hvilket er en periode på 20 ms. Inden for den periode varieres pulsbredden, en kortere puls positionerer servoen mod nul-gradersmærket, mens en længere bevæger motorakslen mod 180 (eller 270) graders position.
 
+Pulsen tilføres hele tiden til motorens kontrolinputs og låser akslen i den ønskede position.
+
 Denne effekt er illustreret som følger:
 
 ![PWM servo](https://www.meccanismocomplesso.org/wp-content/uploads/2020/08/Arduino-PWM-duty-cycle-angolo-del-servo-motore.jpg)
+
+## PWM til DC Motorstyring
+
+DC motorer kan også styres med PWM. I stedet for at styre positionen, styrer vi hastigheden.
