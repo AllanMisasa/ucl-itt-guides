@@ -19,7 +19,8 @@ module.exports = {
         'programmering-basics',
         'state-machine',
         'sql',
-        'paho-mqtt'
+        'paho-mqtt',
+        'debugging',
       ],
     },
     {
