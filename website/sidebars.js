@@ -9,6 +9,8 @@ module.exports = {
         'time-of-flight',
         'i2c',
         'sensor',
+        'adc',
+        'pwm',
       ],
     },
     {

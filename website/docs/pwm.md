@@ -59,3 +59,91 @@ DC motorer kan også styres med PWM. I stedet for at styre positionen, styrer vi
 Rent teknisk set, så er en DC motor for langsom til at reagere på at vi slukker i meget kort tid til at den vil stoppe. Dette kan dog indstilles. Det kan læses mere om hos Adafruit: [link til artikel om PWM frekvens](https://learn.adafruit.com/improve-brushed-dc-motor-performance/pwm-frequency).
 
 Adafruit har en god artikel der går lidt mere i dybden om hvordan duty cycle påvirker spændingen der går til en DC motor: [Adafruit link til DC motor duty cycle](https://learn.adafruit.com/improve-brushed-dc-motor-performance/duty-cycle).
+
+## Øvelser i PWM 
+
+### Øvelse 0 - Servokalibrering
+
+Vi bruger vores blå servoer i kittet i dag. Herunder er et billede og wiring for den blå servo:
+
+![SG90](images/th.jpeg)
+
+Problemet er nu at en servo reagerer lidt anderledes på PWM end LED'er. I kan læse om indstillinger, og se et diagram der viser hvordan den roterer baseret på duty cycle under afsnittet `PWM til servostyring` ovenfor.
+
+Det vi skal nu, er at kalibrere koden så den passer til vores servo. Det gør vi ved at lave en funktion der tager en vinkel som parameter, og så beregner den duty cycle der skal til for at rotere til den vinkel. Bemærk at der kan være forskel på hvor langt den roterer, så det er ikke sikkert at den roterer 180 grader. Dette er det i skal kalibrere - hvilken niveau af duty passer til hvilken vinkel.
+
+Nedskriv hvilen niveau af duty der svarer til 0 grader, 90 grader og 180 grader.
+
+### Øvelse 1 - Servostyret "radar"
+
+Nu skal vi bruge servomotorer til at lave en "radar"... som egentlig er sonar.
+
+Sådan en her:
+
+![radar](images/Radar.jpg)
+
+I meget mindre skala, og med sonar. Så vi skal bruge vores servo, sammen med vores HC-SR04 sonar, og et 3D print jeg har printet til jer. Det er en holder til sonaren, så den kan sidde på en servo.
+
+Så vi skal bruge vores servo samt koden fra øvelse 0. Servoen skal hele tiden, langsomt, dreje fra side til side. Hver gang den har drejet 10 grader, skal den stoppe og måle afstanden med sonaren. Den skal så gemme afstanden i en liste, og så fortsætte med at dreje. Når den har drejet 180 grader, skal den så dreje tilbage igen, og måle afstande på samme måde. Dette skal laves til næste gang.
+
+Sonar pin-tabel:
+
+|Sonar | ESP32|
+|:---:|:---:|
+|VCC|VIN|
+|GND|GND|
+|TRIG|GPIO 5|
+|ECHO|GPIO 18|
+
+Basiskode (copy paste til Thonny og gem på ESP32):
+
+```python
+import machine, time
+from machine import Pin
+
+class HCSR04:
+    def __init__(self, trigger_pin, echo_pin, echo_timeout_us=500*2*30):
+        self.echo_timeout_us = echo_timeout_us
+        self.trigger = Pin(trigger_pin, mode=Pin.OUT, pull=None)
+        self.trigger.value(0)
+
+        self.echo = Pin(echo_pin, mode=Pin.IN, pull=None)
+
+    def _send_pulse_and_wait(self):
+        self.trigger.value(0) # Stabilize the sensor
+        time.sleep_us(5)
+        self.trigger.value(1)
+        time.sleep_us(10)
+        self.trigger.value(0)
+        try:
+            pulse_time = machine.time_pulse_us(self.echo, 1, self.echo_timeout_us)
+            return pulse_time
+        except OSError as ex:
+            if ex.args[0] == 110: # 110 = ETIMEDOUT
+                raise OSError('Out of range')
+            raise ex
+
+    def distance_mm(self):
+        pulse_time = self._send_pulse_and_wait()
+        mm = pulse_time * 100 // 582
+        return mm
+
+    def distance_cm(self):
+        pulse_time = self._send_pulse_and_wait()
+        cms = (pulse_time / 2) / 29.1
+        return cms
+```
+
+Få distance som centimeter (andet kode i lægger på):
+
+```python
+from hcsr04 import HCSR04
+from time import sleep
+
+sensor = HCSR04(trigger_pin=5, echo_pin=18, echo_timeout_us=10000)
+
+while True:
+    distance = sensor.distance_cm()
+    print('Distance:', distance, 'cm')
+    sleep(1)
+```
