@@ -67,7 +67,7 @@ module.exports = {
             },
             {
               label: 'Elab komponentdatabase',
-              href: 'https://elab.gsrv.dk/',
+              href: 'https://elab.speedpro.dk/',
             },
           ],
         },
