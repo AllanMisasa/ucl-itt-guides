@@ -10,7 +10,7 @@ module.exports = {
         'i2c',
         'sensor',
         'adc',
-        'pwm',
+        'led',
       ],
     },
     {
