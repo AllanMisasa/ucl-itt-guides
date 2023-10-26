@@ -4,9 +4,8 @@ title: Objekt-Orienteret Programmering Basics
 
 ## Objektorienteret programmering for IT teknologer del 1
 
-#### *Version 1.0 af Allan Misasa Nielsen*
-
 ## Hvorfor objektorienteret programmering?
+
 Det kan godt være at vi kan bygge stort set alle programmer bare ved brug af variable, løkker og funktioner. Men hvis vi arbejder med større projekter, bliver det hurtigt uoverskueligt, og vanskeligt at arbejde med.
 
 Derfor bruger vi objektorienteret programmering for at opnå følgende ønskværdige egenskaber:
@@ -26,6 +25,7 @@ Et objekt beskriver et **koncept** og ikke en datatype. Datatyper kan dog bruges
 En klasse, som vi i Python definerer med keyword `class`, er en slags skabelon, som vi kan lave objekter ud af. Så hvis vi f.eks. har en klasse der kan fungere som en skabelon til styring af PWM komponenter, så kan vi f.eks. lave mange motor-objekter ud fra den.
 
 Ét eksempel på en klasse til PWM kontrol:
+
 ```python
 from machine import Pin, PWM
 class PWM_kontrol:
@@ -33,6 +33,7 @@ class PWM_kontrol:
 		self.pin = pin
 		self.pwm_type = pwm_type
 ```
+
 Først importerer vi de nødvendige biblioteker, `machine`, for igen, objekt-orienteret programmering er her for at vi ikke skal opfinde den dybe tallerken.
 Så definerer vi en klasse der hedder `PWM_kontrol`.
 
@@ -43,36 +44,38 @@ Disse variable er gemt bag `self` key word, hvilket vil sige at de egenskaber ti
 That is it, vi har allerede en klasse vi kan lave objekter ud af, med bare få linjer Python kode! 
 
 At oprette et objekt ud fra denne klasse gøres så simpelt som:
+
 ```python
 motor = PWM_kontrol(4, motor)
 ```
+
 Her definerer vi en motor der bruger GPIO pin 4. Så er der nu et motorobjekt. Hvis man vil have en servo, kan vi bare kalde variablet `servo` og give servo som input nummer 2. 
 Det kan ikke rigtigt noget endnu. Derfor har vi brug for metoder.
 
 ## Metoder
+
 Metoder er en måde at beskrive objekters funktionalitet. Det er meget lig funktioner, men indeni klasser, og til at udføre noget på objekter. 
 
-I nedenstående eksempel er der 2 klassemetoder, `__init__` og `binary_led`.
-`__init__` er teknisk set det man kalder en **constructor**, hvilket vil sige at når man laver et objekt af klassen, så kører den altid det kode der er i constructor'en først. 
-`binary_led` er en metode der fungerer ligesom en almindelig funktion. Her i klassen tager den dog ét input, som er `self`. `self` er faktisk et keyword, som refererer til det objekt der er lavet af klassen. Så når et objekt er kreeret, og `__init__` funktionen er kørt igennem, så kan `binary_led` lave noget på det objekt. 
+from machine import PWM
+import math
 
 ```python
-from machine import Pin, PWM
+class Servo:
+    """
+    A simple class for controlling hobby servos.
+    """
+    def __init__(self, pin, freq=50, min_duty=50, max_duty=900, angle=0):
+        self.min_duty = min_duty
+        self.max_duty = max_duty
+        self.freq = freq
+        self.angle = angle
+        self.pwm = PWM(pin, freq=freq, duty=0)
 
-class PWM_kontrol:
-	def __init__(self, pin, pwm_type):
-		self.pin = pin
-		self.pwm_type = pwm_type
-		if self.pwm_type == ToggleLED:
-			self.led = Pin(self.pin, Pin.OUT)
-			while True:
-				self.binary_led()
-		
-	def binary_led(self):
-		self.led.toggle()
+    def rotate(self, angle=None):
+		"""Rotate the servo to the specified ``angle``."""
+		duty_cycle = self.min_duty + (self.max_duty - self.min_duty) / 180 * angle
+        self.pwm.duty(duty_cycle)
 ```
-
-For at opsummere, `self` refererer til objektet, og det er kun klassen selv der kan lave forandringer i objektet selv. For instance, så kan `led` objektet kun styres af klassen selv, som det ser ud nu. 
 
 For at runde klassestruktur af, en illustration der opsummerer klassers opbygning:
 ![OOP](https://thumbs.dreamstime.com/z/object-oriented-programming-oop-paradigm-explanation-outline-diagram-object-oriented-programming-language-oop-paradigm-239724045.jpg)
