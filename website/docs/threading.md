@@ -1,5 +1,5 @@
 ---
-title: threading
+title: Threading
 ---
 
 ## Threading teori
@@ -17,6 +17,36 @@ Lad os starte med parallelisering, det er når vi har en opgave, som vi kan dele
 Threading er egentligt bare meget hurtige skift mellem funktioner. For husk at jeres ESP's processor kan klare millioner af beregninger i sekundet, og jeres PC'er oftest flere milliarder. Hvis vi skifter mellem funktioner hurtigt nok, så kan det godt se ud som om at de kører samtidigt. Threading fungerer på selv enkelt-kerne processorer. Threading handler så i kontrast til parallelisering, om at kunne køre forskelligartede processer som om de kører samtidigt. Det er derfor vi kan køre et `while` loop der kører motorene, og et andet `while` loop der kører sensorerne, samtidigt.
 
 ## Threading eksempler i Python
+
+### Simpelt eksempel
+
+```python
+"""This is a simple example of threading"""
+import threading
+from time import sleep
+
+def print_hello():
+    """Prints hello every second"""
+    while True:
+        print("hello")
+        sleep(1)
+
+def print_world():
+    """Prints world every second"""
+    while True:
+        print("world")
+        sleep(1)
+
+def run():
+    """Starts the two threads"""
+    t1 = threading.Thread(target=print_hello)
+    t2 = threading.Thread(target=print_world)
+
+    t1.start()
+    t2.start()
+```
+
+### Eksempel til motorstyring med logik
 
 ```python
 """This is the main file for the motors"""
@@ -63,4 +93,4 @@ def run():
 
 if __name__ == "__main__":
     run()
-``````
+```
