@@ -2,6 +2,58 @@
 title: Debugging og fejlfinding
 ---
 
+## Debugging terminologi i Python
+
+### Hvad er debugging?
+
+Debugging er en systematisk metode til at finde fejl i kode, årsagen til disse fejl, samt hvor og hvornår de opstår. Det er stadig op til programmøren at finde en rettelse, men debugging gør det meget nemmere at finde ud af hvad i skal fokusere på. Samtidigt kan debugging også hjælpe jer med at se hvad der sker når i kører en kode, selvom i måske allerede har en idé om hvordan det virker.
+
+### Fejltyper i Python
+
+`SyntaxError` er den mest almindelige fejl i Python. Den opstår når Python ikke kan forstå koden. Det kan være fordi der mangler en parentes, en kolon, eller noget helt tredje. Det er nemt at finde disse fejl, da Python fortæller jer præcis hvor fejlen er.
+
+`NameError` opstår når Python ikke kan finde en variabel eller funktion. Det kan være fordi i har stavet det forkert, eller fordi i har glemt at definere det. I kan også få denne fejl hvis i prøver at bruge en variabel eller funktion uden for dens scope.
+
+`TypeError` opstår når i prøver at bruge en variabel eller funktion på en måde som ikke er tilladt. Det kan være at i prøver at lægge en string og en integer sammen, eller at i prøver at bruge en funktion på en variabel som ikke er af den rigtige type.
+
+`IndexError` opstår når i prøver at bruge en liste eller et array med et index som ikke findes. Det kan være at i prøver at bruge et index som er større end længden af listen, eller at i prøver at bruge et negativt index.
+
+`ValueError` opstår når i prøver at bruge en variabel eller funktion med en værdi som ikke er tilladt. Det kan være at i prøver at bruge en funktion med en string som ikke er et tal, eller at i prøver at bruge en funktion med et tal som ikke er et heltal.
+
+`KeyError` opstår når i prøver at bruge en dictionary med en nøgle som ikke findes. Det kan være at i prøver at bruge en nøgle som ikke er en string, eller at i prøver at bruge en nøgle som ikke findes i dictionaryen.
+
+`AttributeError` opstår når i prøver at bruge en klasse eller et objekt med en attribut som ikke findes. Det kan være at i prøver at bruge en attribut som ikke er en string, eller at i prøver at bruge en attribut som ikke findes i klassen eller objektet.
+
+`ImportError` opstår når i prøver at importere en pakke eller et modul som ikke findes. Det kan være at i har stavet det forkert, eller at i har glemt at installere det.
+
+`IndentationError` opstår når i ikke har indrykket jeres kode korrekt. Det kan være at i har glemt at indrykke, eller at i har indrykket for meget eller for lidt.
+
+`IOError` opstår når i prøver at læse eller skrive til en fil som ikke findes. Det kan være at i har stavet filnavnet forkert, eller at i har glemt at oprette filen.
+
+`KeyboardInterrupt` opstår når i afbryder jeres program med `CTRL+C`. Det kan være at i har glemt at tilføje en `try`/`except`-blok, eller at i har glemt at tilføje en `while`-løkke.
+
+### Exceptions
+
+Exceptions er en måde at håndtere fejl på. I kan bruge `try`/`except`-blokke til at håndtere exceptions, altså de errors der er listet ovenfor. Dvs. vi kan sørge for at i stedet for at programmet bare stopper, så kan vi programmere en reaktion på bestemte typer errors.
+
+Eksempel på en generel `try`/`except`-blok der reagerer på alle typer fejl:
+
+```python
+try:
+    # Kode som kan give en exception
+except:
+    # Kode som skal køres hvis der opstår en exception
+```
+
+Mere specifikt for at fange et KeyboardInterrupt:
+
+```python
+try:
+    # Kode som kan give en exception
+except KeyboardInterrupt:
+    # Kode som skal køres hvis der opstår en KeyboardInterrupt
+```
+
 ## Øvelser
 
 ### Enkel fejlfinding
