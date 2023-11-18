@@ -23,7 +23,8 @@ module.exports = {
         'sql',
         'paho-mqtt',
         'debugging',
-        'threading'
+        'threading',
+        'async',
       ],
     },
     {
