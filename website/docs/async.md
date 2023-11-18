@@ -59,6 +59,18 @@ En coroutine er en asynkron funktion. Det er en funktion der kan køre i baggrun
 
 Et event loop er en funktion der kører i baggrunden, og som sørger for at køre alle coroutines. Det er den der sørger for at køre alle coroutines i baggrunden, og sørger for at de ikke blokerer resten af programmet.
 
+For eksempel kan vi lave en tabel der forklarer hvordan et event loop fungerer:
+
+| IO | Callback |
+| :---: | :---: |
+| LED1 er klar | Funktion der tænder LED1 |
+| LED2 er klar | Funktion der tænder LED2 |
+| LED1 skal blinke | Funktion der blinker LED1 |
+| LED2 skal sænke lysstyrken | Funktion der sænker lysstyrken på LED2 |
+| Osv... | Osv... |
+
+Altså kan man sige at event loopet holder øje med systemets status, og hvornår der er "grønt lys" for at vi kan køre en funktion.
+
 ### Opbygningen af et asynkront program
 
 Når vi bygger et asynkront program, sørger vi først for at lave de forskellige coroutines (asynkrone funktioner) der skal køre i baggrunden. Derefter laver vi en event loop, som sørger for at køre alle coroutines. Derfor er dette også en meget strukturet måde at programmere  
