@@ -11,6 +11,7 @@ module.exports = {
         'sensor',
         'adc',
         'led',
+        'espnow',
       ],
     },
     {
