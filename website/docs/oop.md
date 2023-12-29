@@ -74,7 +74,7 @@ class Servo:
     def rotate(self, angle=None):
 		"""Rotate the servo to the specified ``angle``."""
 		duty_cycle = self.min_duty + (self.max_duty - self.min_duty) / 180 * angle
-        self.pwm.duty(duty_cycle)
+        self.pwm.duty(duty_cycle)   
 ```
 
 For at runde klassestruktur af, en illustration der opsummerer klassers opbygning:

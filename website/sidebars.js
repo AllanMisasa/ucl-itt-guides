@@ -30,6 +30,13 @@ module.exports = {
     },
     {
       type: 'category',
+      label: 'C++ for Computer Vision',
+      items: [
+        'from-python-to-cpp',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Projekt',
       items: [
         'generelprojektbeskrivelse',
