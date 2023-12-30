@@ -33,6 +33,8 @@ module.exports = {
       label: 'C++ for Computer Vision',
       items: [
         'from-python-to-cpp',
+         'basic-opencv',
+         'vision-filters',
       ],
     },
     {

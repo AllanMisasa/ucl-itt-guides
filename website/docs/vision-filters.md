@@ -1,0 +1,152 @@
+---
+title: Filtre og thresholds i OpenCV
+---
+
+## Gaussian blur
+
+Gaussian blur er en af de mest brugte filtre i billedbehandling. Det bruges til at fjerne støj fra et billede, og det kan også bruges til at udglatte et billede. Det er et såkaldt lineært filter, hvilket betyder at det er et filter der kan beskrives ved en matematisk ligning. 
+
+I C++ bruger vi funktionen `GaussianBlur` til at lave et Gaussian blur på et billede. Den tager et billede som input, samt størrelsen på kernelen og standardafvigelsen. Se følgende eksempel:
+
+```cpp
+Mat image = imread("C:/images/lena.jpg"); // Read the file from disk
+Mat blurredImage; // Create a new empty image
+GaussianBlur(image, blurredImage, Size(5, 5), 1.5); // Apply Gaussian blur - kernel size is 5x5 and standard deviation is 1.5. Higher values result in more blur
+imshow("Lena", blurredImage); // Show the image
+waitKey(0); // Wait for keypress
+imwrite("C:/images/lena_blurred.jpg", blurredImage); // Write the image to disk
+```
+
+## Trackbars til at justere parametre og teste forskellige filterværdier
+
+Vi kan bruge trackbars til at justere parametre og teste forskellige filterværdier live. Se følgende eksempel:
+
+```cpp
+int main() {
+    Mat image = imread("C:/images/lena.jpg"); // Read the file from disk
+    Mat blurredImage; // Create a new empty image
+    namedWindow("Lena", WINDOW_AUTOSIZE); // Create a window
+    createTrackbar("Kernel size", "Lena", 0, 100, onTrackbarChange, &image); // Create a trackbar
+    createTrackbar("Sigma", "Lena", 0, 100, onTrackbarChange, &image); // Create a trackbar
+    onTrackbarChange(0, &image); // Call the function to initialize the image
+    waitKey(0); // Wait for keypress
+    return 0;
+}
+```
+
+Vi kan også gøre det med farvebilledeværdier, hvor vi kan teste hvis vi kigger i bestemte ranges af farver, f.eks. til at isolere objekter der har en bestemt farve:
+
+Viser det fulde program fordi det giver et bedre perspektiv, og det anbefales også at køre dette program isoleret.
+
+```cpp
+#include "opencv2/imgproc.hpp"
+#include "opencv2/highgui.hpp"
+
+using namespace cv;
+using namespace std;
+
+const int max_value_H = 360/2;
+const int max_value = 255;
+const String window_capture_name = "Video Capture";
+const String window_detection_name = "Object Detection";
+int low_H = 0, low_S = 0, low_V = 0;
+int high_H = max_value_H, high_S = max_value, high_V = max_value;
+static void on_low_H_thresh_trackbar(int, void *)
+{
+	low_H = min(high_H-1, low_H);
+	setTrackbarPos("Low H", window_detection_name, low_H);
+}
+static void on_high_H_thresh_trackbar(int, void *)
+{
+	high_H = max(high_H, low_H+1);
+	setTrackbarPos("High H", window_detection_name, high_H);
+}
+static void on_low_S_thresh_trackbar(int, void *)
+{
+	low_S = min(high_S-1, low_S);
+	setTrackbarPos("Low S", window_detection_name, low_S);
+}
+static void on_high_S_thresh_trackbar(int, void *)
+{
+	high_S = max(high_S, low_S+1);
+	setTrackbarPos("High S", window_detection_name, high_S);
+}
+static void on_low_V_thresh_trackbar(int, void *)
+{
+	low_V = min(high_V-1, low_V);
+	setTrackbarPos("Low V", window_detection_name, low_V);
+}
+static void on_high_V_thresh_trackbar(int, void *)
+{
+	high_V = max(high_V, low_V+1);
+	setTrackbarPos("High V", window_detection_name, high_V);
+}
+
+void HSV_track_bars(Mat img) {
+	Mat img_HSV, frame_threshold;	// Create Mat objects for HSV image and thresholded image
+
+    namedWindow(window_capture_name);
+    namedWindow(window_detection_name);
+	
+    // Trackbars to set thresholds for HSV values
+    createTrackbar("Low H", window_detection_name, &low_H, max_value_H, on_low_H_thresh_trackbar);
+    createTrackbar("High H", window_detection_name, &high_H, max_value_H, on_high_H_thresh_trackbar);
+    createTrackbar("Low S", window_detection_name, &low_S, max_value, on_low_S_thresh_trackbar);
+    createTrackbar("High S", window_detection_name, &high_S, max_value, on_high_S_thresh_trackbar);
+    createTrackbar("Low V", window_detection_name, &low_V, max_value, on_low_V_thresh_trackbar);
+    createTrackbar("High V", window_detection_name, &high_V, max_value, on_high_V_thresh_trackbar);
+
+	while (true) {
+
+		cvtColor(img, img_HSV, COLOR_BGR2HSV);
+		inRange(img_HSV, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), frame_threshold);
+
+		imshow(window_capture_name, img);
+		imshow(window_detection_name, frame_threshold);
+		char key = (char) waitKey(30);
+		if (key == 'q' || key == 27)
+		{
+			break;
+		}
+	}
+}
+
+int main(int argc, char* argv[])
+{
+    Mat img = imread("C:/images/lena.jpg"); // Read the file from disk
+    HSV_track_bars(img);
+    return 0;
+}
+```
+
+## Farvefiltre
+
+Ovenstående eksempel kan bruges til at finde de rigtige værdier til et farvefilter. Efter vi har fundet det, kan vi gemme værdierne i en variabel, og bruge dem til at lave et farvefilter, som er det vi skal se på nu.
+
+Lad os starte med hvordan vi kan lave et farvefilter. Vi starter med at konvertere billedet til HSV, da det er nemmere at arbejde med farver i HSV end i RGB. Derefter laver vi et threshold på farven, ved at lave 2 skalarer med 3 værdier hver - nedre og øvre grænse på farverne, og til sidst bruger vi `bitwise_and` til at lave et binært billede. Se følgende eksempel:
+
+```cpp
+Mat image = imread("C:/images/lena.jpg"); // Read the file from disk
+Mat hsvImage; // Create a new empty image
+cvtColor(image, hsvImage, COLOR_BGR2HSV); // Convert to HSV
+Mat mask; // Create a new empty image
+inRange(hsvImage, Scalar(0, 100, 100), Scalar(10, 255, 255), mask); // Apply threshold - first scalar is lower bound, second scalar is upper bound
+Mat result; // Create a new empty image
+bitwise_and(image, image, result, mask); // Apply mask
+imshow("Lena", result); // Show the image
+waitKey(0); // Wait for keypress
+```
+
+## Thresholding
+
+Vi kan bruge noget kaldet Otsu's metode til at lave et threshold på et billede. Det er en metode der automatisk finder den bedste threshold-værdi. Se følgende eksempel:
+
+```cpp
+Mat image = imread("C:/images/lena.jpg"); // Read the file from disk
+Mat grayImage; // Create a new empty image
+cvtColor(image, grayImage, COLOR_BGR2GRAY); // Convert to grayscale
+Mat thresholdedImage; // Create a new empty image
+threshold(grayImage, thresholdedImage, 0, 255, THRESH_BINARY | THRESH_OTSU); // Apply threshold
+imshow("Lena", thresholdedImage); // Show the image
+waitKey(0); // Wait for keypress
+```
