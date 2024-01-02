@@ -2,35 +2,41 @@
 title: Filtre og thresholds i OpenCV
 ---
 
-## Gaussian blur
+## Trackbars til at justere parametre og teste forskellige thresholdværdier
 
-Gaussian blur er en af de mest brugte filtre i billedbehandling. Det bruges til at fjerne støj fra et billede, og det kan også bruges til at udglatte et billede. Det er et såkaldt lineært filter, hvilket betyder at det er et filter der kan beskrives ved en matematisk ligning. 
-
-I C++ bruger vi funktionen `GaussianBlur` til at lave et Gaussian blur på et billede. Den tager et billede som input, samt størrelsen på kernelen og standardafvigelsen. Se følgende eksempel:
+Vi kan bruge trackbars til at justere parametre og teste forskellige thresholdværdier live. Se følgende eksempel:
 
 ```cpp
-Mat image = imread("C:/images/lena.jpg"); // Read the file from disk
-Mat blurredImage; // Create a new empty image
-GaussianBlur(image, blurredImage, Size(5, 5), 1.5); // Apply Gaussian blur - kernel size is 5x5 and standard deviation is 1.5. Higher values result in more blur
-imshow("Lena", blurredImage); // Show the image
-waitKey(0); // Wait for keypress
-imwrite("C:/images/lena_blurred.jpg", blurredImage); // Write the image to disk
-```
+string path = "images/"; 		
 
-## Trackbars til at justere parametre og teste forskellige filterværdier
+int low = 0;
+int high = 255;
+const String window = "Binary thresholds";
 
-Vi kan bruge trackbars til at justere parametre og teste forskellige filterværdier live. Se følgende eksempel:
+static void onTrackbar(int, void *) {
+	low_H = min(high-1, low);
+	setTrackbarPos("Low", window, low_H);
+}
 
-```cpp
 int main() {
-    Mat image = imread("C:/images/lena.jpg"); // Read the file from disk
-    Mat blurredImage; // Create a new empty image
-    namedWindow("Lena", WINDOW_AUTOSIZE); // Create a window
-    createTrackbar("Kernel size", "Lena", 0, 100, onTrackbarChange, &image); // Create a trackbar
-    createTrackbar("Sigma", "Lena", 0, 100, onTrackbarChange, &image); // Create a trackbar
-    onTrackbarChange(0, &image); // Call the function to initialize the image
-    waitKey(0); // Wait for keypress
-    return 0;
+	std::string image_path = samples::findFile("starry_night.jpg");  	// Set path to image
+	string italy = path + "italy.jpg";									// Set path to image
+	Mat threshold;
+	Mat img1 = imread(italy, 0);  										// Read image into Mat object
+	Mat img2 = imread(image_path, 0);  									// Read image into Mat object
+
+	namedWindow(window, WINDOW_AUTOSIZE); 								// Create a window
+	createTrackbar("Low", window, &low , 255, onTrackbar); // Create a trackbar
+
+	while (true) {	
+		inRange(img1, low_H, high_H, threshold);
+		imshow("Lena", threshold); 										// Show the image
+		char key = (char) waitKey(30);
+		if (key == 'q' || key == 27)
+		{
+			break;
+		}			
+	}								
 }
 ```
 
@@ -97,7 +103,6 @@ void HSV_track_bars(Mat img) {
     createTrackbar("High V", window_detection_name, &high_V, max_value, on_high_V_thresh_trackbar);
 
 	while (true) {
-
 		cvtColor(img, img_HSV, COLOR_BGR2HSV);
 		inRange(img_HSV, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), frame_threshold);
 
@@ -113,8 +118,7 @@ void HSV_track_bars(Mat img) {
 
 int main(int argc, char* argv[])
 {
-    Mat img = imread("C:/images/lena.jpg"); // Read the file from disk
-    HSV_track_bars(img);
+    Mat img = imread("C:/images/lena.jpg"); 
     return 0;
 }
 ```
@@ -126,27 +130,59 @@ Ovenstående eksempel kan bruges til at finde de rigtige værdier til et farvefi
 Lad os starte med hvordan vi kan lave et farvefilter. Vi starter med at konvertere billedet til HSV, da det er nemmere at arbejde med farver i HSV end i RGB. Derefter laver vi et threshold på farven, ved at lave 2 skalarer med 3 værdier hver - nedre og øvre grænse på farverne, og til sidst bruger vi `bitwise_and` til at lave et binært billede. Se følgende eksempel:
 
 ```cpp
-Mat image = imread("C:/images/lena.jpg"); // Read the file from disk
-Mat hsvImage; // Create a new empty image
-cvtColor(image, hsvImage, COLOR_BGR2HSV); // Convert to HSV
-Mat mask; // Create a new empty image
+Mat image = imread("C:/images/lena.jpg");   						// Read the file from disk
+Mat hsvImage; 														// Create a new empty image
+cvtColor(image, hsvImage, COLOR_BGR2HSV); 							// Convert to HSV
+Mat mask; 															// Create a new empty image
 inRange(hsvImage, Scalar(0, 100, 100), Scalar(10, 255, 255), mask); // Apply threshold - first scalar is lower bound, second scalar is upper bound
-Mat result; // Create a new empty image
-bitwise_and(image, image, result, mask); // Apply mask
-imshow("Lena", result); // Show the image
-waitKey(0); // Wait for keypress
+Mat result; 														// Create a new empty image
+bitwise_and(image, image, result, mask); 							// Apply mask
+imshow("Lena", result); 											// Show the image
+waitKey(0); 														// Wait for keypress
 ```
 
 ## Thresholding
 
-Vi kan bruge noget kaldet Otsu's metode til at lave et threshold på et billede. Det er en metode der automatisk finder den bedste threshold-værdi. Se følgende eksempel:
+Vi bruger først binær thresholding som er den mest simple måde at lave thresholding. Det den gør, er at tage ethvert pixel i billedet, og hvis det er over en bestemt værdi, så sætter den det til 255, ellers sætter den det til 0. Se følgende eksempel:
+
+```cpp
+Mat binary_threshold(Mat src) {
+    Mat dst;
+    int thresh = 100;
+    int maxValue = 255;
+    threshold(src, dst, thresh, maxValue, THRESH_BINARY);
+    return dst;
+}
+```
+
+Vi kan bruge noget kaldet Otsu's metode til at lave et threshold på et billede. Det er en metode der automatisk finder den bedste threshold-værdi. Så husk at tjekke threshold værdien når du kører den (eksemplet printer det i terminalen) Se følgende eksempel:
+
+```cpp
+Mat OtsuThreshold(Mat src) {
+    Mat dst;
+    int thresh = 0;
+    int maxValue = 255;
+    long double thres = threshold(src, dst, thresh, maxValue, THRESH_OTSU); // thres is the approximated threshold for Otsu
+    cout << "Otsu threshold: " << thres << endl;                            // print approximated threshold
+    return dst;
+}
+```
+
+## Gaussian blur
+
+Gaussian blur er en af de mest brugte filtre i billedbehandling. Det bruges til at fjerne støj fra et billede, og det kan også bruges til at udglatte et billede. Det er et såkaldt lineært filter, hvilket betyder at det er et filter der kan beskrives ved en matematisk ligning. 
+
+I C++ bruger vi funktionen `GaussianBlur` til at lave et Gaussian blur på et billede. Den tager et billede som input, samt størrelsen på kernelen og standardafvigelsen. Se følgende eksempel:
 
 ```cpp
 Mat image = imread("C:/images/lena.jpg"); // Read the file from disk
-Mat grayImage; // Create a new empty image
-cvtColor(image, grayImage, COLOR_BGR2GRAY); // Convert to grayscale
-Mat thresholdedImage; // Create a new empty image
-threshold(grayImage, thresholdedImage, 0, 255, THRESH_BINARY | THRESH_OTSU); // Apply threshold
-imshow("Lena", thresholdedImage); // Show the image
+Mat blurredImage; // Create a new empty image
+GaussianBlur(image, blurredImage, Size(5, 5), 1.5); // Apply Gaussian blur - kernel size is 5x5 and standard deviation is 1.5. Higher values result in more blur
+imshow("Lena", blurredImage); // Show the image
 waitKey(0); // Wait for keypress
+imwrite("C:/images/lena_blurred.jpg", blurredImage); // Write the image to disk
 ```
+
+## Bilateralfilter
+
+Bilateral filter er bedre end Gaussian blur når der er støj i billedet. Det er også et lineært filter, og det bruger 2 standardafvigelser - en for rummet og en for intensiteten. Se følgende eksempel:
