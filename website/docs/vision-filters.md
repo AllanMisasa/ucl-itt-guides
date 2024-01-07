@@ -1,5 +1,5 @@
 ---
-title: Filtre og thresholds i OpenCV
+title: Filtre, thresholds og morfologiske operationer i OpenCV
 ---
 
 ## Trackbars til at justere parametre og teste forskellige thresholdværdier
@@ -19,14 +19,14 @@ static void onTrackbar(int, void *) {
 }
 
 int main() {
-	std::string image_path = samples::findFile("starry_night.jpg");  	// Set path to image
+	string image_path = samples::findFile("starry_night.jpg");  		// Set path to image
 	string italy = path + "italy.jpg";									// Set path to image
 	Mat threshold;
 	Mat img1 = imread(italy, 0);  										// Read image into Mat object
 	Mat img2 = imread(image_path, 0);  									// Read image into Mat object
 
 	namedWindow(window, WINDOW_AUTOSIZE); 								// Create a window
-	createTrackbar("Low", window, &low , 255, onTrackbar); // Create a trackbar
+	createTrackbar("Low", window, &low , 255, onTrackbar); 				// Create a trackbar
 
 	while (true) {	
 		inRange(img1, low_H, high_H, threshold);
@@ -89,12 +89,11 @@ static void on_high_V_thresh_trackbar(int, void *)
 }
 
 void HSV_track_bars(Mat img) {
-	Mat img_HSV, frame_threshold;	// Create Mat objects for HSV image and thresholded image
+	Mat img_HSV, frame_threshold;						// Create Mat objects for HSV image and thresholded image
 
     namedWindow(window_capture_name);
     namedWindow(window_detection_name);
 	
-    // Trackbars to set thresholds for HSV values
     createTrackbar("Low H", window_detection_name, &low_H, max_value_H, on_low_H_thresh_trackbar);
     createTrackbar("High H", window_detection_name, &high_H, max_value_H, on_high_H_thresh_trackbar);
     createTrackbar("Low S", window_detection_name, &low_S, max_value, on_low_S_thresh_trackbar);
@@ -175,14 +174,66 @@ Gaussian blur er en af de mest brugte filtre i billedbehandling. Det bruges til 
 I C++ bruger vi funktionen `GaussianBlur` til at lave et Gaussian blur på et billede. Den tager et billede som input, samt størrelsen på kernelen og standardafvigelsen. Se følgende eksempel:
 
 ```cpp
-Mat image = imread("C:/images/lena.jpg"); // Read the file from disk
-Mat blurredImage; // Create a new empty image
-GaussianBlur(image, blurredImage, Size(5, 5), 1.5); // Apply Gaussian blur - kernel size is 5x5 and standard deviation is 1.5. Higher values result in more blur
-imshow("Lena", blurredImage); // Show the image
-waitKey(0); // Wait for keypress
-imwrite("C:/images/lena_blurred.jpg", blurredImage); // Write the image to disk
+Mat image = imread("C:/images/lena.jpg"); 				// Read the file from disk
+Mat blurredImage; 										// Create a new empty image
+GaussianBlur(image, blurredImage, Size(5, 5), 1.5); 	// Apply Gaussian blur - kernel size is 5x5 and standard deviation is 1.5. Higher values result in more blur
+imshow("Lena", blurredImage); 							// Show the image
+waitKey(0); 											// Wait for keypress
+imwrite("C:/images/lena_blurred.jpg", blurredImage); 	// Write the image to disk
 ```
 
 ## Bilateralfilter
 
 Bilateral filter er bedre end Gaussian blur når der er støj i billedet. Det er også et lineært filter, og det bruger 2 standardafvigelser - en for rummet og en for intensiteten. Se følgende eksempel:
+
+```cpp
+Mat filteredImage; 									// Create a new empty image
+bilateralFilter(image, filteredImage, 5, 60, 0.4); 	// Apply bilateral filter - kernel size is 5x5, sigmaColor is the standard deviation for the intensity and sigmaSpace is the standard deviation for the space
+imshow("Lena", filteredImage); 						// Show the image
+waitKey(0); 										// Wait for keypress
+```
+
+## Edgepreserving filter
+
+Edgepreserving filter er et filter der bruges til at bevare kanter i et billede. Det er et ikke-lineært filter, og det bruger 2 standardafvigelser - en for rummet og en for intensiteten. Se følgende eksempel:
+
+```cpp
+Mat filteredImage; 													// Create a new empty image
+edgePreservingFilter(image, filteredImage, 1, 60, 0.4); 			// Apply edge preserving filter - last 2 values: sigma_s is the standard deviation for the space and sigma_r is the standard deviation for the intensity
+imshow("After edgepreserving filter is applied", filteredImage); 	// Show the image
+waitKey(0); 														// Wait for keypress
+```
+
+## Morfologiske operationer
+
+Morfologiske operationer er operationer der bruges til at ændre formen af et objekt. De bruges ofte til at fjerne støj fra et billede, og til at udvide eller formindske objekter. De bruges også til at fjerne huller i objekter.
+
+Vi bruger erosion til at formindske kanter i billedet. Vi bruger funktionen `erode` til at lave erosion. Den tager et billede som input, samt en kernel. Se følgende eksempel:
+
+```cpp
+Mat erodedImage; 							// Create a new empty image
+Mat kernel = Mat::ones(5, 5, CV_32F); 		// Create a 5x5 kernel with all elements equal to 1
+erode(image, erodedImage, kernel); 			// Apply erosion
+imshow("Eroded image", erodedImage); 				// Show the image
+waitKey(0); 								// Wait for keypress
+```
+
+Vi bruger derefter dilation til at udvide objekter, f.eks. kanter, i et billede. Vi bruger funktionen `dilate` til at lave dilation. Den tager et billede som input, samt en kernel. Se følgende eksempel:
+
+```cpp
+Mat dilatedImage; 							// Create a new empty image
+Mat kernel = Mat::ones(5, 5, CV_32F); 		// Create a 5x5 kernel with all elements equal to 1
+dilate(image, dilatedImage, kernel); 		// Apply dilation
+imshow("Dilated image", dilatedImage); 				// Show the image
+waitKey(0); 								// Wait for keypress
+```
+
+Vi kan bruge open til at lave både erosion og dilation sammen, hvilket kan hjælpe med at finde færdige kanter. Vi bruger funktionen `morphologyEx` til at lave opening. Den tager et billede som input, samt en kernel. Se følgende eksempel:
+
+```cpp
+Mat openedImage; 							// Create a new empty image
+Mat kernel = Mat::ones(5, 5, CV_32F); 		// Create a 5x5 kernel with all elements equal to 1
+morphologyEx(image, openedImage, MORPH_OPEN, kernel); // Apply opening
+imshow("Opened image", openedImage); 				// Show the image
+waitKey(0); 								// Wait for keypress
+```
