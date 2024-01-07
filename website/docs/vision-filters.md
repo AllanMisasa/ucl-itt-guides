@@ -206,7 +206,7 @@ waitKey(0); 														// Wait for keypress
 
 ## Morfologiske operationer
 
-Morfologiske operationer er operationer der bruges til at ændre formen af et objekt. De bruges ofte til at fjerne støj fra et billede, og til at udvide eller formindske objekter. De bruges også til at fjerne huller i objekter.
+Morfologiske operationer er operationer der bruges til at ændre formen af et objekt. De bruges ofte til at fjerne støj fra et billede, og til at udvide eller formindske objekter. De bruges også til at fjerne huller i kanter.
 
 Vi bruger erosion til at formindske kanter i billedet. Vi bruger funktionen `erode` til at lave erosion. Den tager et billede som input, samt en kernel. Se følgende eksempel:
 
@@ -214,7 +214,7 @@ Vi bruger erosion til at formindske kanter i billedet. Vi bruger funktionen `ero
 Mat erodedImage; 							// Create a new empty image
 Mat kernel = Mat::ones(5, 5, CV_32F); 		// Create a 5x5 kernel with all elements equal to 1
 erode(image, erodedImage, kernel); 			// Apply erosion
-imshow("Eroded image", erodedImage); 				// Show the image
+imshow("Eroded image", erodedImage); 		// Show the image
 waitKey(0); 								// Wait for keypress
 ```
 
@@ -224,16 +224,16 @@ Vi bruger derefter dilation til at udvide objekter, f.eks. kanter, i et billede.
 Mat dilatedImage; 							// Create a new empty image
 Mat kernel = Mat::ones(5, 5, CV_32F); 		// Create a 5x5 kernel with all elements equal to 1
 dilate(image, dilatedImage, kernel); 		// Apply dilation
-imshow("Dilated image", dilatedImage); 				// Show the image
+imshow("Dilated image", dilatedImage); 		// Show the image
 waitKey(0); 								// Wait for keypress
 ```
 
-Vi kan bruge open til at lave både erosion og dilation sammen, hvilket kan hjælpe med at finde færdige kanter. Vi bruger funktionen `morphologyEx` til at lave opening. Den tager et billede som input, samt en kernel. Se følgende eksempel:
+Vi kan bruge open til at lave både erosion og dilation sammen, hvilket kan hjælpe med at eliminere huller (gaps) i kanter. Vi bruger funktionen `morphologyEx` til at lave opening. Den tager et billede som input, samt en kernel. Se følgende eksempel:
 
 ```cpp
-Mat openedImage; 							// Create a new empty image
-Mat kernel = Mat::ones(5, 5, CV_32F); 		// Create a 5x5 kernel with all elements equal to 1
-morphologyEx(image, openedImage, MORPH_OPEN, kernel); // Apply opening
-imshow("Opened image", openedImage); 				// Show the image
-waitKey(0); 								// Wait for keypress
+Mat openedImage; 										// Create a new empty image
+Mat kernel = Mat::ones(5, 5, CV_32F); 					// Create a 5x5 kernel with all elements equal to 1
+morphologyEx(image, openedImage, MORPH_OPEN, kernel); 	// Apply opening
+imshow("Opened image", openedImage); 					// Show the image
+waitKey(0); 											// Wait for keypress
 ```
